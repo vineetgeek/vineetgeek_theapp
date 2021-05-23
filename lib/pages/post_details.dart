@@ -4,6 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 import '../model/post_entity.dart';
 import '../widgets/helpers.dart';
 import '../widgets/post_card.dart';
+import 'package:share/share.dart';
 
 class PostDetails extends StatelessWidget {
   PostEntity post;
@@ -93,6 +94,17 @@ class PostDetails extends StatelessWidget {
                 decoration: TextDecoration.underline,
               ),
             ),
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          child: IconButton(
+            icon: Icon(
+              Icons.share,
+              size: 24.0,
+            ),
+            onPressed: () {
+              Share.share('share the news: ' + post.link);
+            },
           ),
         ),
       ),
