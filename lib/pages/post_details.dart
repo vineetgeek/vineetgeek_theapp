@@ -5,6 +5,7 @@ import '../model/post_entity.dart';
 import '../widgets/helpers.dart';
 import '../widgets/post_card.dart';
 import 'package:share/share.dart';
+import 'package:like_button/like_button.dart';
 
 class PostDetails extends StatelessWidget {
   PostEntity post;
@@ -97,14 +98,52 @@ class PostDetails extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          child: IconButton(
-            icon: Icon(
-              Icons.share,
-              size: 24.0,
-            ),
-            onPressed: () {
-              Share.share('share the news: ' + post.link);
-            },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.share,
+                  size: 24.0,
+                ),
+                onPressed: () {
+                  Share.share('Check out this news: ' + post.link);
+                },
+              ),
+              Container(
+                child: LikeButton(
+                  size: 24.0,
+                  circleColor: CircleColor(start: Colors.red, end: Colors.red),
+                  bubblesColor: BubblesColor(
+                    dotPrimaryColor: Colors.red,
+                    dotSecondaryColor: Colors.red,
+                  ),
+                  likeBuilder: (bool isLiked) {
+                    return Icon(
+                      Icons.favorite,
+                      color: isLiked ? Colors.red : Colors.grey,
+                      size: 24.0,
+                    );
+                  },
+                  likeCount: 234,
+                  countBuilder: (int count, bool isLiked, String text) {
+                    var color = isLiked ? Colors.red : Colors.grey;
+                    Widget result;
+                    if (count == 0) {
+                      result = Text(
+                        "love",
+                        style: TextStyle(color: color),
+                      );
+                    } else
+                      result = Text(
+                        text,
+                        style: TextStyle(color: color),
+                      );
+                    return result;
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),
